@@ -9,7 +9,14 @@ import os
 import json
 
 app = Flask(__name__)
-CORS(app)
+from flask_cors import CORS
+
+CORS(app, origins=[
+    "http://localhost:3000",
+    "https://auto-logg-*.vercel.app",
+    "https://auto-logg-fv5z9whem-kyrilous-projects.vercel.app"
+])
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///maintenance.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -135,4 +142,4 @@ def delete_record(record_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))     
