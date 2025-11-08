@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from functools import wraps
 import firebase_admin
-from firebase_admin import credentials, auth
+from firebase_admin import credentials, auth, initialize_app
 
 
 app = Flask(__name__)
@@ -15,8 +15,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)  
 
-cred = credentials.Certificate("firebase-admin-key.json")
-firebase_admin.initialize_app(cred)
+cred_json = json.loads(os.environ.get("FIREBASE_CREDENTIALS"))
+cred = credentials.Certificate(cred_json)
+initialize_app(cred)
 
 
 class MaintenanceRecord(db.Model):
