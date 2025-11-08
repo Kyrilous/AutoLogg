@@ -136,9 +136,21 @@ function App() {
                 boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
               }}
             >
-              <Typography variant="subtitle1" fontWeight="500">
+              {/* <Typography variant="title" fontWeight="750" sx={{fontFamily: "'Poppins', san-serif"}}>
+                Hello, {user.displayName?.split(" ")[0] || "there"}
+              </Typography> */}
+
+              <Typography
+                sx={{
+                  fontSize: "1.3rem",
+                  fontWeight: 600,
+                  fontFamily: "'Poppins', sans-serif",
+                  letterSpacing: "0.7px",
+                }}
+              >
                 Hello, {user.displayName?.split(" ")[0] || "there"}
               </Typography>
+
 
               <Box display="flex" alignItems="center" gap={2}>
                 <FormControlLabel
