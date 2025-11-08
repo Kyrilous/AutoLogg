@@ -5,19 +5,25 @@ from flask_migrate import Migrate
 from functools import wraps
 import firebase_admin
 from firebase_admin import credentials, auth, initialize_app
-
+import os
+import json
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend communication
+CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///maintenance.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)  
+migrate = Migrate(app, db)
 
-cred_json = json.loads(os.environ.get("FIREBASE_CREDENTIALS"))
-cred = credentials.Certificate(cred_json)
-initialize_app(cred)
+cred_json = os.environ.get("FIREBASE_CREDENTIALS")
+
+if cred_json:
+    cred = credentials.Certificate(json.loads(cred_json))
+    initialize_app(cred)
+else:
+    raise Exception("🔥 FIREBASE_CREDENTIALS environment variable not found on server")
+
 
 
 class MaintenanceRecord(db.Model):
