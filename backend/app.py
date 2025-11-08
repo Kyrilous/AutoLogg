@@ -16,14 +16,21 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-cred_json = os.environ.get("FIREBASE_CREDENTIALS")
-
-if cred_json:
-    service_account_info = json.loads(cred_json)
-    cred = credentials.Certificate(service_account_info)
+# Initialize Firebase Admin (Local or Deployment)
+if os.path.exists("serviceAccountKey.json"):
+    print("Using local Firebase serviceAccountKey.json")
+    cred = credentials.Certificate("serviceAccountKey.json")
     initialize_app(cred)
 else:
-    raise Exception("🔥 FIREBASE_CREDENTIALS environment variable not found!")
+    print("Using FIREBASE_CREDENTIALS from environment")
+    cred_json = os.environ.get("FIREBASE_CREDENTIALS")
+    if cred_json:
+        service_account_info = json.loads(cred_json)
+        cred = credentials.Certificate(service_account_info)
+        initialize_app(cred)
+    else:
+        raise Exception("🔥 No Firebase credentials found! Add serviceAccountKey.json for local dev or set FIREBASE_CREDENTIALS for deployment.")
+
 
 
 
@@ -111,15 +118,21 @@ def get_records():
 
 
 @app.route('/records/<int:record_id>', methods=['DELETE'])
+@verify_token
 def delete_record(record_id):
+    user_id = request.user_id  # Firebase user
     record = MaintenanceRecord.query.get(record_id)
 
     if not record:
         return jsonify({"message": "Record not found"}), 404
-    
+
+    if record.user_id != user_id:
+        return jsonify({"message": "Unauthorized: You cannot delete this record"}), 403
+
     db.session.delete(record)
     db.session.commit()
     return jsonify({"message": "Record deleted successfully"}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)

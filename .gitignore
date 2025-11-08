@@ -8,3 +8,4 @@ firebase-admin-key.json
 backend/instance/*.db
 node_modules/
 .cache/
+backend/serviceAccountKey.json
