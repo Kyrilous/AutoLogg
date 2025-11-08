@@ -24,7 +24,7 @@ function AddMaintenance({ onAdd, user }) {
     const token = await user.getIdToken();
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/add_record", {
+      const response = await fetch("https://autologg.onrender.com/add_record", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -18,7 +18,7 @@ function App() {
     try {
       const token = await user.getIdToken();
   
-      const response = await fetch('http://127.0.0.1:5000/add_record', {
+      const response = await fetch('https://autologg.onrender.com/add_record', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ function App() {
   const handleDeleteRecord = async (id) => {
   try {
     const token = await user.getIdToken();
-    const response = await fetch(`http://127.0.0.1:5000/records/${id}`, {
+    const response = await fetch(`https://autologg.onrender.com/records/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ function App() {
   const fetchRecords = async (user) => {
     try {
       const token = await user.getIdToken();
-      const response = await fetch(`http://127.0.0.1:5000/records?user_id=${user.uid}`, {
+      const response = await fetch(`https://autologg.onrender.com/records?user_id=${user.uid}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

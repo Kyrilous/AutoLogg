@@ -19,10 +19,12 @@ migrate = Migrate(app, db)
 cred_json = os.environ.get("FIREBASE_CREDENTIALS")
 
 if cred_json:
-    cred = credentials.Certificate(json.loads(cred_json))
+    service_account_info = json.loads(cred_json)
+    cred = credentials.Certificate(service_account_info)
     initialize_app(cred)
 else:
-    raise Exception("🔥 FIREBASE_CREDENTIALS environment variable not found on server")
+    raise Exception("🔥 FIREBASE_CREDENTIALS environment variable not found!")
+
 
 
 
