@@ -11,11 +11,13 @@ import json
 app = Flask(__name__)
 from flask_cors import CORS
 
-CORS(app, origins=[
-    "http://localhost:3000",
-    "https://auto-logg-*.vercel.app",
-    "https://auto-logg-fv5z9whem-kyrilous-projects.vercel.app"
+CORS(app, supports_credentials=True, origins=[
+    "https://auto-logg.vercel.app",
+    "https://autologg.net",
+    "https://www.autologg.net",
+    "http://localhost:3000"
 ])
+
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///maintenance.db'
