@@ -14,35 +14,40 @@ function App() {
   const { mode, setMode } = useContext(ThemeToggleContext);
   const theme = mode === "dark" ? darkTheme : lightTheme;
 
-  const handleAddRecord = async (record) => {
-    try {
-      const token = await user.getIdToken();
+  // const handleAddRecord = async (record) => {
+  //   try {
+  //     const token = await user.getIdToken();
   
-      const response = await fetch('https://autologg.onrender.com/add_record', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          ...record,
-          user_id: user.uid,
-        }),
-      });
+  //     const response = await fetch('https://autologg.onrender.com/add_record', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       body: JSON.stringify({
+  //         ...record,
+  //         user_id: user.uid,
+  //       }),
+  //     });
   
-      if (!response.ok) throw new Error('Failed to add record');
+  //     if (!response.ok) throw new Error('Failed to add record');
   
-      // ✅ Parse the saved record returned from backend
-      const savedRecord = await response.json();
+  //     // ✅ Parse the saved record returned from backend
+  //     const savedRecord = await response.json();
   
-      // ✅ Append the new record (with real ID) to the records list
-      setRecords((prev) => [savedRecord, ...prev]); // puts on top
+  //     // ✅ Append the new record (with real ID) to the records list
+  //     setRecords((prev) => [savedRecord, ...prev]); // puts on top
   
-    } catch (error) {
-      console.error('Add record error:', error);
-    }
-  };
+  //   } catch (error) {
+  //     console.error('Add record error:', error);
+  //   }
+  // };
   
+
+  const handleAddRecord = (savedRecord) => {
+  setRecords((prev) => [savedRecord, ...prev]);
+};
+
   
   
   
