@@ -124,7 +124,7 @@ function App() {
       />
       <Box sx={{ p: 2, backgroundColor: theme.palette.background.default, minHeight: "100vh" }}>
         <Typography variant="h4" align="center" fontWeight="bold" sx={{ color: theme.palette.primary.main, mb: 3 }}>
-          🚗 AutoLog
+          🚗 AutoLogg
         </Typography>
 
         {user ? (
