@@ -19,7 +19,7 @@ function AddMaintenance({ onAdd, user }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user) return;localhost
+    if (!user) return;
     
 
     const token = await user.getIdToken();
